@@ -44,8 +44,8 @@ var (
 func RegisterAdService(apiGroup *gin.RouterGroup) {
 	rg := apiGroup.Group("/ad")
 	rg.GET("/adList", adList)
-	rg.GET("/adSingle", adSingle)
-	rg.POST("/ad", adAdd)
+	rg.GET("/:id", adSingle)
+	rg.POST("/", adAdd)
 }
 
 func adAdd(c *gin.Context) {
@@ -95,11 +95,8 @@ func adList(c *gin.Context) {
 
 func adSingle(c *gin.Context) {
 	var fields []string
-	if err := c.BindJSON(&fields); err != nil {
-		writeError(c, err)
-		return
-	}
-	id, err := strconv.Atoi(c.Query("id"))
+	c.BindJSON(&fields)
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		writeError(c, err)
 		return
@@ -171,6 +168,7 @@ func writeJson(c *gin.Context, v interface{}) error {
 
 func writeError(c *gin.Context, err error) {
 	c.Status(http.StatusInternalServerError)
+	c.Header("Content-Type", "application/json")
 	c.Writer.WriteString(err.Error())
 
 }

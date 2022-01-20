@@ -8,6 +8,7 @@ import (
 	_ "github.com/lib/pq"
 	"log"
 	"net/http"
+	"os"
 )
 
 func PanicToResponseError(c *gin.Context) {
@@ -21,21 +22,24 @@ func PanicToResponseError(c *gin.Context) {
 	}()
 	c.Next()
 }
+func JSONMiddleware(c *gin.Context) {
+	c.Writer.Header().Set("Content-Type", "application/json")
+	c.Next()
+}
 
 func initDbConnection() error {
-	database.Client = &database.PostgresClient{Host: "localhost", Port: "5400",
-		DbName: "addb", User: "ad_super_user", Password: "mxBCNjSqcw77", SslMode: database.NoSSl}
+	database.Client = &database.PostgresClient{DbConn: os.Getenv("DB_CONN")}
 	return database.Client.IitDbConn()
 }
 func initGIN() chan error {
 	router := gin.Default()
 	health.Init()
-	router.Use(PanicToResponseError)
+	router.Use(JSONMiddleware, PanicToResponseError)
 	api := router.Group("/api")
 	api.GET("ping", func(context *gin.Context) {
 		context.JSON(200, gin.H{
 			"message":       "pong",
-			"serviceUpTime": health.ServiceStartTime.Format("Mon Jan 2 15:04:05 MST 2006"),
+			"serviceUpTime": health.GetServiceUptime(),
 		})
 	})
 	services.RegisterAdService(api)

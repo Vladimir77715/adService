@@ -2,7 +2,6 @@ package database
 
 import (
 	"database/sql"
-	"fmt"
 	_ "github.com/lib/pq"
 	"log"
 )
@@ -12,19 +11,12 @@ const (
 )
 
 type PostgresClient struct {
-	db       *sql.DB
-	Host     string
-	Port     string
-	DbName   string
-	User     string
-	Password string
-	SslMode  string
+	db     *sql.DB
+	DbConn string
 }
 
 func (pg *PostgresClient) IitDbConn() error {
-	connStr := fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s  sslmode=%s",
-		pg.User, pg.Password, pg.Host, pg.Port, pg.DbName, pg.SslMode)
-	db, err := sql.Open("postgres", connStr)
+	db, err := sql.Open("postgres", pg.DbConn)
 	if err != nil {
 		return err
 	}

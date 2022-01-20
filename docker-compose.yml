@@ -1,12 +1,22 @@
 version: "3.9"
 services:
+  adservice:
+    build: .
+    environment:
+      DB_CONN: "user=ad_super_user password=mxBCNjSqcw77 host=postgresContainer port=5432 dbname=addb  sslmode=disable"
+    ports:
+      - "8080:8080"
+      - "10000:10000"
+
   postgres:
     image: postgres:13.3
+    container_name: "postgresContainer"
     environment:
       POSTGRES_DB: "addb"
       POSTGRES_USER: "ad_super_user"
       POSTGRES_PASSWORD: "mxBCNjSqcw77"
       PGDATA: "/var/lib/postgresql/data/pgdata"
+      hostname: postgres
     volumes:
       - ./db/sqlScripts:/docker-entrypoint-initdb.d
       - ./db/postgresql/data:/var/lib/postgresql/data
@@ -24,3 +34,4 @@ services:
         limits:
           cpus: '1'
           memory: 4G
+

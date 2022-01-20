@@ -6,10 +6,6 @@ import (
 	"log"
 )
 
-const (
-	NoSSl = "disable"
-)
-
 type PostgresClient struct {
 	db     *sql.DB
 	DbConn string

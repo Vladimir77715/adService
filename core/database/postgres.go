@@ -59,24 +59,3 @@ func (pg *PostgresClient) ExecuteQuery(query string,
 	}
 	return nil
 }
-
-//func (pg *PostgresClient) GetAdList() ([]Ad, error) {
-//	if pg.db == nil {
-//		return nil, errors.New(noConnectionErr)
-//	}
-//	rows, err := pg.db.Query("select a.id, a.name, a.description, a.price , a.create_ts from public.ad a")
-//	if err != nil {
-//		return nil,err
-//	}
-//	adResult := make([]Ad,0,0)
-//
-//	for rows.Next() {
-//		var ad Ad
-//		err := rows.Scan(&ad.Id, &ad.Name, &ad.Description, &ad.Price, &ad.CreateTs)
-//		if err != nil {
-//			return nil,err
-//		}
-//		adResult = append(adResult, ad)
-//	}
-//	return adResult, nil
-//}

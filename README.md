@@ -86,7 +86,7 @@ docker-compose up
 `GET api/ad/:id` - 
 
 ### BodyParams
-    [images,description]
+    ["images","description"]
     -- images - get ad images list
     -- description - get description  
 ### Response

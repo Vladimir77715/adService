@@ -73,10 +73,6 @@ docker-compose up
         "ttt1"
         ]
     },
-        {
-        "name": "kek",
-        "price": 500
-        }
     ]
 
 ## Get current ad by id

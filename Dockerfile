@@ -28,7 +28,6 @@ WORKDIR /app/
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /app/main .
 
-EXPOSE 10000
 EXPOSE 8080
 
 

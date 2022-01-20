@@ -6,8 +6,6 @@ services:
       DB_CONN: "user=ad_super_user password=mxBCNjSqcw77 host=postgresContainer port=5432 dbname=addb  sslmode=disable"
     ports:
       - "8080:8080"
-      - "10000:10000"
-
   postgres:
     image: postgres:13.3
     container_name: "postgresContainer"

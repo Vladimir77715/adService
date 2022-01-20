@@ -36,7 +36,7 @@ docker-compose up
 
 ### Request
 
-`GET api/adList?orderField=price&order=DESC` 
+`GET api/ad/adList?orderField=price&order=DESC` 
 
 ### QueryParams
     orderField = price | create_ts
